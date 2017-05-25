@@ -1,0 +1,14 @@
+:
+//above lines are ignored
+start() {
+  # Start daemon.
+  echo -n $"Starting $prog: "
+  daemon $prog \
+    --etcd-endpoints=http://<%= @elb_url %> -ip-masq=true \
+    > /var/log/flanneld.log 2>&1 &
+  RETVAL=$?
+  echo
+  [ $RETVAL -eq 0 ] && touch $lockfile
+  return $RETVAL
+}
+:
