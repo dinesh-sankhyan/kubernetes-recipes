@@ -20,5 +20,6 @@ bash 'install_kubernetes' do
   tar zxvf kubernetes-#{node['kubernetes']['version']}.tar.gz
   cd kubernetes/server
   tar zxvf kubernetes-server-linux-amd64.tar.gz
+
   EOH
 end

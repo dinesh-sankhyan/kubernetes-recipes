@@ -1,3 +1,3 @@
 service 'etcd' do
-action [:enable,:start]
+	action :start
 end

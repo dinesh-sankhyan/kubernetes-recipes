@@ -1,3 +1,5 @@
+include_recipe 'kubernetes::kubernetes-minion-setup'
+
 service "flanneld" do
 	action :start
 	notifies :run, 'bash[wait_flanneld]', :immediately
@@ -14,10 +16,16 @@ bash 'wait_flanneld' do
 	EOH
 
 	action :nothing
-	notifies :start, 'service[kubernetes-master]', :immediately
+	notifies :start, 'service[start-docker]', :immediately
 end
 
+service "start-docker" do
+	service_name 'docker'
+	action :nothing
+	notifies :start, 'service[start-kubernetes-minion]', :immediately
+end
 
-service "kubernetes-master" do
+service "start-kubernetes-minion" do
+	service_name 'kubernetes-minion'
 	action :nothing
 end
